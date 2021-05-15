@@ -42,13 +42,13 @@ class HtmlFormatter
     array_push($this->states, $this->state);
 
     // Keep track of opened html tags
-    $this->openedTags = array('span' => false, 'p' => false);
+    $this->openedTags = array('div' => false, 'p' => false);
     // Create the first paragraph
     $this->OpenTag('p');
     // Begin format
     $this->ProcessGroup($document->root);
     // Instead of removing opened tags, we close them
-      $append = $this->openedTags['span'] ? '</span>' : '';
+      $append = $this->openedTags['div'] ? '</span>' : '';
       $append .= $this->openedTags['p'] ? '</p>' : '';
 
       return $this->output . $append;
@@ -389,15 +389,15 @@ class HtmlFormatter
 
   protected function Write($txt)
   {
-    // Create a new 'span' element only when a style change occurs.
+    // Create a new 'div' element only when a style change occurs.
     // 1st case: style change occured
-    // 2nd case: there is no change in style but the already created 'span'
+    // 2nd case: there is no change in style but the already created 'div'
     // element is somehow closed (ex. because of an end of paragraph)
     if  (!$this->state->equals($this->previousState) ||
-        ($this->state->equals($this->previousState) && !$this->openedTags['span']))
+        ($this->state->equals($this->previousState) && !$this->openedTags['div']))
     {
-      // If applicable close previously opened 'span' tag
-      $this->CloseTag('span');
+      // If applicable close previously opened 'div' tag
+      $this->CloseTag('div');
 
       $style = $this->state->PrintStyle();
 
@@ -406,7 +406,7 @@ class HtmlFormatter
 
       // Create style attribute and open span
       $attr = $style ? "style=\"{$style}\"" : "";
-      $this->OpenTag('span', $attr);
+      $this->OpenTag('div', $attr);
     }
     $this->output .= $txt;
   }
