@@ -44,12 +44,12 @@ class HtmlFormatter
     // Keep track of opened html tags
     $this->openedTags = array('div' => false, 'p' => false);
     // Create the first paragraph
-    $this->OpenTag('p');
+    // $this->OpenTag('p'); // DH suppress p tag
     // Begin format
     $this->ProcessGroup($document->root);
     // Instead of removing opened tags, we close them
       $append = $this->openedTags['div'] ? '</span>' : '';
-      $append .= $this->openedTags['p'] ? '</p>' : '';
+      // $append .= $this->openedTags['p'] ? '</p>' : ''; // DH suppress p tag
 
       return $this->output . $append;
 
@@ -291,7 +291,7 @@ class HtmlFormatter
         $this->state->hidden = $word->parameter;
         break;
       case 'fs': // Font size
-        $this->state->fontsize = ceil(($word->parameter / 24) * 16);
+        $this->state->fontsize = ceil(($word->parameter / 24) * 18); // DH adjusted to make font a little bigger: was 24) * 16
         break;
       case 'f': // Font
         $this->state->font = $word->parameter;
@@ -329,7 +329,7 @@ class HtmlFormatter
       case 'emdash':    $this->Write("&mdash;"); break;  // &#151; &#8212;
       case 'enspace':   $this->Write("&ensp;");  break;  // &#8194;
       case 'emspace':   $this->Write("&emsp;");  break;  // &#8195;
-      case 'tab':       $this->Write("&nbsp;");  break;  // Character value 9
+      // case 'tab':       $this->Write("&nbsp;");  break;  // Character value 9 // DH skip, results are unpredictable
       case 'line':      $this->output .= "<br/>"; break; // character value (line feed = &#10;) (carriage return = &#13;)
 
       /*
@@ -349,7 +349,7 @@ class HtmlFormatter
         // Close previously opened tags
         $this->CloseTags();
         // Begin a new paragraph
-        $this->OpenTag('p');
+        // $this->OpenTag('p'); // DH suppress p tag
         break;
 
       /* Code pages */
@@ -425,7 +425,7 @@ class HtmlFormatter
         switch ($tag)
         {
           case 'p': // Replace empty 'p' element with a line break
-            $this->output = substr($this->output ,0, -3) . "<br>";
+            //$this->output = substr($this->output ,0, -3) . "<br>"; // DH suppress p tag
             break;
           default: // Delete empty elements
             $this->output = substr($this->output ,0, -strlen("<{$tag}>"));
