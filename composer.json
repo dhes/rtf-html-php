@@ -1,7 +1,10 @@
 {
-  "name": "dhes/rtf-html-php",
+  "name": "henck/rtf-html-php",
   "description": "RTF to HTML converter in PHP",
-  "keywords": ["rtf", "converter"],
+  "keywords": [
+    "rtf",
+    "converter"
+  ],
   "type": "library",
   "version": "1.1",
   "license": "GPL-2.0",
@@ -9,11 +12,8 @@
     {
       "name": "Alexander van Oostenrijk",
       "email": "alex.vanoostenrijk@gmail.com"
-    },
-    {
-      "name": "Dan Heslinga",
-      "email": "dan@heslinga.us"
-    }  ],
+    }
+  ],
   "scripts": {
     "test": [
       "phpunit tests"
